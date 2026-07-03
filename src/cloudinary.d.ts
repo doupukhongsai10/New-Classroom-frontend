@@ -16,6 +16,7 @@ declare global {
         uploadPreset: string;
         multiple?: boolean;
         folder?: string;
+        [key: string]: any;
     }
 
     interface CloudinaryUploadResult {
@@ -23,6 +24,7 @@ declare global {
         info?: {
             secure_url?: string;
             public_id?: string;
+            delete_token?: string;
         };
     }
 

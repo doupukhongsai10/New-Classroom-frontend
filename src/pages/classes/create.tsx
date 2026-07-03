@@ -59,7 +59,7 @@ const Create = () => {
   };
 
   // Fetch subjects list
-  const { data: subjectsData, isLoading: subjectsLoading } = useList<Subject>({
+  const { query: { data: subjectsData, isLoading: subjectsLoading } } = useList<Subject>({
     resource: "subjects",
     pagination: {
       pageSize: 100,
@@ -67,7 +67,7 @@ const Create = () => {
   });
 
   // Fetch teachers list
-  const { data: teachersData, isLoading: teachersLoading } = useList<User>({
+  const { query: { data: teachersData, isLoading: teachersLoading } } = useList<User>({
     resource: "users",
     filters: [
       {
@@ -84,7 +84,7 @@ const Create = () => {
   const teachers = teachersData?.data || [];
   const subjects = subjectsData?.data || [];
 
-  const setBannerImage = (field, file) => {
+  const setBannerImage = (field: any, file: UploadWidgetValue | null) => {
       if(file){
           field.onChange(file.url);
           form.setValue('bannerCldPubId', file.publicId, {
@@ -136,8 +136,8 @@ const Create = () => {
                                    <UploadWidget
                                        value={field.value ? {url:
                                        field.value, publicId: bannerPublicId ?? ''} : null}
-                                       onChange = {(file: any,field: any) =>
-                                           setBannerImage(file,field) }
+                                       onChange={(file) =>
+                                           setBannerImage(field, file) }
                                    />
                                </FormControl>
                                <FormMessage />
@@ -189,7 +189,7 @@ const Create = () => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {subjects.map((subject) => (
+                            {subjects.map((subject: Subject) => (
                               <SelectItem
                                 key={subject.id}
                                 value={subject.id.toString()}
@@ -223,7 +223,7 @@ const Create = () => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {teachers.map((teacher) => (
+                            {teachers.map((teacher: User) => (
                               <SelectItem key={teacher.id} value={teacher.id}>
                                 {teacher.name}
                               </SelectItem>
