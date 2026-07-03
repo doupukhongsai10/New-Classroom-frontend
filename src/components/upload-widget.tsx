@@ -30,7 +30,11 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ value = null, onChange, dis
                 maxFileSize: 5 * 1024 * 1024,
                 allowedFormats: ['jpg', 'jpeg', 'png', 'webp']
             }, (error, result) => {
-                if (!error && result.event === 'success' && result.info && typeof result.info === 'object') {
+                if (error) {
+                    console.error('Cloudinary upload error:', error);
+                    return;
+                }
+                if (result.event === 'success' && result.info && typeof result.info === 'object') {
                     const payload: UploadWidgetValue = {
                         url: result.info.secure_url ?? '',
                         publicId: result.info.public_id ?? '',
@@ -85,12 +89,13 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ value = null, onChange, dis
                 </div>
             ) : (
                 <div 
-                    className="upload-dropzone w-full h-full flex flex-col items-center justify-center cursor-pointer hover:bg-muted/20 transition"
+                    className={`upload-dropzone w-full h-full flex flex-col items-center justify-center transition ${disabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer hover:bg-muted/20'}`}
                     role="button" 
-                    tabIndex={0}
+                    tabIndex={disabled ? -1 : 0}
+                    aria-disabled={disabled}
                     onClick={openWidget} 
                     onKeyDown={(event) => {
-                        if (event.key === 'Enter') {
+                        if (event.key === 'Enter' || event.key === ' ') {
                             event.preventDefault();
                             openWidget();
                         }
