@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { UploadWidgetProps, UploadWidgetValue } from "@/types";
 import { UploadCloud, Trash2 } from "lucide-react";
-import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '@/constants';
+
+const getEnvVar = (key: string): string => {
+    const value = import.meta.env[key];
+    if (!value) {
+        throw new Error(`Missing environment variable: ${key}`);
+    }
+    return value;
+};
 
 const UploadWidget: React.FC<UploadWidgetProps> = ({ value = null, onChange, disabled = false }) => {
     const widgetRef = useRef<CloudinaryUploadWidget | null>(null);
@@ -22,9 +29,13 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ value = null, onChange, dis
 
         const initializeWidget = () => {
             if (!window.cloudinary || widgetRef.current) return false;
+            
+            const cloudName = getEnvVar("VITE_CLOUDINARY_CLOUD_NAME");
+            const uploadPreset = getEnvVar("VITE_CLOUDINARY_UPLOAD_PRESET");
+
             widgetRef.current = window.cloudinary.createUploadWidget({
-                cloudName: CLOUDINARY_CLOUD_NAME,
-                uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+                cloudName,
+                uploadPreset,
                 multiple: false,
                 folder: 'uploads',
                 maxFileSize: 5 * 1024 * 1024,
