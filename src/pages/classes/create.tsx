@@ -28,7 +28,6 @@ import { Subject, User, UploadWidgetValue } from "@/types";
 import { Loader2 } from "lucide-react";
 import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
 import UploadWidget from "@/components/upload-widget";
-import {Label} from "@/components/ui/label.tsx";
 
 const Create = () => {
   const back = useBack();
