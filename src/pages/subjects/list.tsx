@@ -81,7 +81,7 @@ const SubjectsList = () => {
         <Breadcrumb />
         <h1 className="page-title">Subjects</h1>
         <div className="intro-row">
-            <p>Quick access to essential metrices and management tools.</p>
+            <p className="mb-4">Quick access to essential metrices and management tools.</p>
             <div className="flex items-center justify-between w-full">
                 {/* Left side: Search */}
                 <div className="relative w-full max-w-md">
