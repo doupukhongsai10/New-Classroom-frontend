@@ -1,6 +1,7 @@
 import { BACKEND_BASE_URL } from "@/constants";
 import { ListResponse } from "@/types"
 import {createDataProvider, CreateDataProviderOptions} from "@refinedev/rest"
+import {CreateResponse} from "@refinedev/core";
 
 if(!BACKEND_BASE_URL)
   throw new Error('BACKEND_BASE_URL is not configured. Please set VITE_BACKEND_BASE_URL in your .env file.')
@@ -33,12 +34,17 @@ const options: CreateDataProviderOptions = {
 
       filters?.forEach((filter) => {
         const field = 'field' in filter ? filter.field : '';
+        const operator = 'operator' in filter ? filter.operator : '';
 
         const value = String(filter.value);
 
         if(resource === 'subjects'){
           if(field === 'department') params.department = value;
           if(field === 'name' || field === 'code') params.search = value;
+        }
+
+        if (operator === "eq" && field) {
+          params[field] = value;
         }
       })
 
@@ -56,6 +62,18 @@ const options: CreateDataProviderOptions = {
       const payload: ListResponse = await response.clone().json();
 
       return payload.pagination?.total?? payload.data?.length?? 0;
+    }
+  },
+
+  create:  {
+    getEndpoint: ({ resource }) => resource,
+
+    buildQueryParams: async ({ variables }) => variables,
+
+    mapResponse: async (response) => {
+      const json: CreateResponse = await response.json();
+
+      return json.data ?? [];
     }
   }
 }
