@@ -22,6 +22,7 @@ import { classSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useBack, useList } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
+import type { ControllerRenderProps } from "react-hook-form";
 import * as z from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { Subject, User, UploadWidgetValue } from "@/types";
@@ -128,7 +129,12 @@ const Create = () => {
   const subjectOptions = subjects.length > 0 ? subjects : fallbackSubjects;
   const teacherOptions = teachers.length > 0 ? teachers : fallbackTeachers;
 
-  const setBannerImage = (field: any, file: UploadWidgetValue | null) => {
+  type ClassFormValues = z.infer<typeof classSchema>;
+
+  const setBannerImage = (
+    field: ControllerRenderProps<ClassFormValues, "bannerUrl">,
+    file: UploadWidgetValue | null,
+  ) => {
     if (file) {
       field.onChange(file.url);
       form.setValue("bannerCldPubId", file.publicId, {

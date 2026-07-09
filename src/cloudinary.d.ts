@@ -16,7 +16,7 @@ declare global {
         uploadPreset: string;
         multiple?: boolean;
         folder?: string;
-        [key: string]: any;
+        [key: string]: unknown;
     }
 
     interface CloudinaryUploadResult {

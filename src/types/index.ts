@@ -12,16 +12,22 @@ export type Class = {
     name: string;
     description: string;
     subject: Subject;
-    teacher: any; // Replace 'any' with a proper 'Teacher' type if you have one
+    teacher: User;
     capacity: number;
     status: "active" | "inactive";
     bannerUrl: string;
     bannerCldPubId: string;
     inviteCode: string;
-    schedules: any[]; // Replace 'any' with a proper 'Schedule' type if you have one
+    schedules: Schedule[];
 };
 
-export interface ListResponse<T = any> {
+export type Schedule = {
+    day: string;
+    startTime: string;
+    endTime: string;
+};
+
+export interface ListResponse<T = unknown> {
     data: T[];
     pagination?: {
         page: number;

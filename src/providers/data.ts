@@ -14,7 +14,7 @@ const builtHttpError = async (response: Response): Promise<HttpError> =>{
 
     if(payload?.message) message = payload.message;
   }catch{
-
+    message = response.statusText || message;
   }
   return {
     message,

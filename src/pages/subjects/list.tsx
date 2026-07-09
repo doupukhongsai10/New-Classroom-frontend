@@ -13,7 +13,6 @@ import { Search } from "lucide-react";
 
 const SubjectsList = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedSubject, setSelectedSubject] = useState('all');
   const [selectedDepartment, setSelectedDepartment] = useState('all');
   const departmentFilters = selectedDepartment === 'all' ? [] : [
     { field: 'department', operator: 'eq' as const, value: selectedDepartment}
