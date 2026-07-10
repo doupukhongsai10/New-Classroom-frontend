@@ -81,6 +81,14 @@ const options: CreateDataProviderOptions = {
 
       return json.data ?? [];
     }
+  },
+
+  getOne: {
+    getEndpoint: ({ resource, id }) => `${resource}/${id}`,
+    mapResponse: async (response) => {
+      const json: CreateResponse = await response.json();
+      return json.data ?? [];
+    }
   }
 }
 

@@ -10,6 +10,7 @@ import { Class } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import { CreateButton } from "@/components/refine-ui/buttons/create";
 import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
+import { ShowButton } from "@/components/refine-ui/buttons/show";
 
 const ClassesList = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -66,7 +67,7 @@ const ClassesList = () => {
           id: "name",
           accessorKey: "name",
           size: 200,
-          header: () => <p className="column-title">Name</p>,
+          header: () => <p className="column-title">Class Name</p>,
           cell: ({ getValue }) => (
             <span className="text-foreground">{getValue<string>()}</span>
           ),
@@ -99,6 +100,19 @@ const ClassesList = () => {
             header: () => <p className="column-title ml-2">Status</p>,
             cell: ({ getValue}) => <Badge>{getValue<string>()}</Badge>
         },
+        {
+          id: "details",
+          size: 150,
+          header: () => <p className="column-title">Details</p>,
+          cell: ({ row }) => (
+            <ShowButton
+              resource="classes"
+              recordItemId={row.original.id}
+              variant="outline"
+              size="sm"
+            >View</ShowButton>
+          ),
+        }
       ],
       []
     ),
