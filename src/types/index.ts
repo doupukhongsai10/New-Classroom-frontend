@@ -11,14 +11,21 @@ export type Class = {
     id: number;
     name: string;
     description: string;
-    subject: Subject;
-    teacher: User;
+    subjectId?: number;
+    teacherId?: string;
+    subject?: Subject;
+    teacher?: User;
+    department?: {
+        id: number;
+        name: string;
+        description?: string;
+    };
     capacity: number;
     status: "active" | "inactive";
-    bannerUrl: string;
-    bannerCldPubId: string;
-    inviteCode: string;
-    schedules: Schedule[];
+    bannerUrl?: string;
+    bannerCldPubId?: string;
+    inviteCode?: string;
+    schedules?: Schedule[];
 };
 
 export type Schedule = {
